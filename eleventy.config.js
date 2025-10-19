@@ -3,18 +3,20 @@ import { feedPlugin } from "@11ty/eleventy-plugin-rss";
 import pluginSyntaxHighlight from "@11ty/eleventy-plugin-syntaxhighlight";
 import pluginNavigation from "@11ty/eleventy-navigation";
 import { eleventyImageTransformPlugin } from "@11ty/eleventy-img";
+import timeToRead from "eleventy-plugin-time-to-read";
 
 import pluginFilters from "./_config/filters.js";
 
+
 /** @param {import("@11ty/eleventy").UserConfig} eleventyConfig */
-export default async function(eleventyConfig) {
+export default async function (eleventyConfig) {
 	// Drafts, see also _data/eleventyDataSchema.js
 	eleventyConfig.addPreprocessor("drafts", "*", (data, content) => {
 		if (data.draft) {
 			data.title = `${data.title} (draft)`;
 		}
 
-		if(data.draft && process.env.ELEVENTY_RUN_MODE === "build") {
+		if (data.draft && process.env.ELEVENTY_RUN_MODE === "build") {
 			return false;
 		}
 	});
@@ -126,6 +128,29 @@ export default async function(eleventyConfig) {
 	// https://www.11ty.dev/docs/copy/#emulate-passthrough-copy-during-serve
 
 	// eleventyConfig.setServerPassthroughCopyBehavior("passthrough");
+
+	// Reading time plugin by JKC-Codes
+	// https://github.com/JKC-Codes/eleventy-plugin-time-to-read
+	eleventyConfig.addPlugin(timeToRead, {
+		speed: '1000 characters per minute',
+		language: 'en',
+		style: 'narrow',
+		type: 'unit',
+		hours: 'auto',
+		minutes: 'auto',
+		seconds: false,
+		digits: 1,
+		output: function (data) {
+			if (!data.hours && !data.minutes) {
+				return "";
+			}
+
+			const hours = data.hours ? `${data.hours} h` : null;
+			const minutes = data.minutes ? `${data.minutes} min` : null;
+
+			return [hours, minutes].filter(i => i).join("");
+		}
+	});
 };
 
 export const config = {
