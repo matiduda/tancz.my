@@ -23,6 +23,21 @@ function myCommand() {
 console.log('Test');
 ```
 
+```ts
+// this is a command
+function myCommand(v: string): number {
+	let counter: number | undefined = 0;
+	counter++;
+
+	const a: { name: string } = {
+		name: "";
+	}
+}
+
+// Test with a line break above this line.
+console.log('Test');
+```
+
 ### Heading with a [link](#code)
 
 Bring to the table win-win survival strategies to ensure proactive domination. At the end of the day, going forward, a new normal that has evolved from generation X is on the runway heading towards a streamlined cloud solution. User generated content in real-time will have multiple touchpoints for offshoring.

@@ -1,8 +1,8 @@
 export default {
-	title: "tancz.my",
-	url: "https://example.com/",
+	title: "tancz.my - Mateusz Duda",
+	url: "https://tancz.my/",
 	language: "en",
-	description: "Personal portfolio & blog.",
+	description: "Personal portfolio & blog",
 	author: {
 		name: "Mateusz Duda",
 		email: "mateusz.duda2@gmail.com",

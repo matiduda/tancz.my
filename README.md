@@ -115,3 +115,35 @@ If your site enforces a [Content Security Policy](https://developer.mozilla.org/
 
 1. In `base.njk`, remove `<style>{% getBundle "css" %}</style>` and uncomment `<link rel="stylesheet" href="{% getBundleFileUrl "css" %}">`
 2. Configure the server with the CSP directive `style-src: 'unsafe-inline'` (less secure).
+
+---
+
+
+TODO:
+
+- inspiration: https://antfu.me/
+ - [ ] Fix color scheme
+ - [ ] Make the header stuck and
+ - [ ] Implement article header list on the left
+ - [ ] "Back to the top" button
+
+- Inspiration from https://www.netlify.com/blog/:
+	- [ ] Implement heading picture to blog articles
+	- [ ] Tags as nice blocks as in 
+
+- [ ] Implement an interesting hero page
+
+- [ ] About me
+
+- [ ] Portfolio / projects
+
+Shield: [![CC BY-NC-SA 4.0][cc-by-nc-sa-shield]][cc-by-nc-sa]
+
+This work is licensed under a
+[Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License][cc-by-nc-sa].
+
+[![CC BY-NC-SA 4.0][cc-by-nc-sa-image]][cc-by-nc-sa]
+
+[cc-by-nc-sa]: http://creativecommons.org/licenses/by-nc-sa/4.0/
+[cc-by-nc-sa-image]: https://licensebuttons.net/l/by-nc-sa/4.0/88x31.png
+[cc-by-nc-sa-shield]: https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg
