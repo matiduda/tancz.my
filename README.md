@@ -41,3 +41,21 @@ All commands are run from the root of the project, from a terminal:
 ## 👀 Want to learn more?
 
 Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+
+---
+
+Main inspiration:
+- https://antfu.me/
+
+To do:
+- Smooth redirects using Astro Transitions
+- Progress bar between page switching
+
+Muszą być:
+- [ ] Licznik odwiedzin
+- [ ] Księga gości (github comments)
+
+Landing page idea:
+
+- Shader doodle in the form of 2.4:1 (21:9) with a beautiful 3D shader animation (or three.js maybe?) - inspiration: https://www.youtube.com/watch?v=OoCdcFSgj9k
+- Texts like: "I make software that is [maintainable / interactive / fast]"
