@@ -1,0 +1,133 @@
+---
+import LocalIcon from "@/components/LocalIcon.astro";
+import { footerNavigation, siteConfig } from "@/config/site";
+
+const socialIconByLabel = {
+  Instagram: "instagram",
+  TikTok: "tiktok",
+  YouTube: "youtube",
+  SoundCloud: "soundcloud",
+  GitHub: "github",
+  RSS: "rss",
+} as const;
+
+const socials = siteConfig.socials.map((item) => ({
+  ...item,
+  icon: socialIconByLabel[item.label as keyof typeof socialIconByLabel] ?? "link-45deg",
+}));
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="outer mt-[var(--space-section)] border-t border-border">
+  <div
+    class="inner grid gap-10 py-12 text-center md:grid-cols-3 md:items-center md:gap-8 md:text-left"
+  >
+    <div class="flex flex-col items-center md:items-start">
+      <!-- <a href="/" class="wordmark"> -->
+      <svg
+        version="1.2"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 1241 300"
+        width="93"
+        height="28"
+      >
+        <style>
+          .s0-footer {
+            fill: var(--primary);
+            stroke: transparent;
+            stroke-miterlimit: 100;
+            stroke-width: 10;
+            stroke-linecap: round;
+          }
+        </style>
+        <path
+          id="tancz.my copy 3"
+          fill-rule="evenodd"
+          class="s0-footer svg-elem-1"
+          d="m108.4 174.9l11.1 35.4q-17.4 8.7-39.3 8.7-24.3 0-38.4-13.5-14.1-13.8-14.1-44.1v-56.1h-25.2v-37.5h25.2c0 0 0-2.2 0-23.1 0-42.4 45.4-42.3 46.8-42.3 0 20.2 0 65.4 0 65.4h36.9v37.5h-36.9v56.1q0 9 4.5 13.5 4.5 4.2 12.3 4.2 8.7 0 17.1-4.2zm136.8-107.1h40.8v148.2h-40.8l-3-17.7q-18.9 20.7-49.2 20.7-20.7 0-36.9-9.6-15.9-9.9-24.9-27.3-9-17.7-9-40.2 0-22.5 9-39.9 9-17.7 24.9-27.3 16.2-9.9 36.9-9.9 15 0 27.6 5.4 12.6 5.1 21.6 15zm-41.1 111.6q15.6 0 25.5-10.2 9.9-10.5 9.9-27.3 0-16.8-9.9-27-9.9-10.5-25.5-10.5-15.6 0-25.5 10.5-9.6 10.5-9.6 27 0 16.5 9.6 27 9.9 10.5 25.5 10.5zm193.8-114.9q27.6 0 43.8 18 16.5 18 16.5 49.8v83.7h-47.1v-81q0-14.4-7.2-22.5-7.2-8.1-19.8-8.1-13.8 0-22.2 9.3-8.4 9.3-8.4 24.3v78h-47.1v-148.2h40.8l3 17.4q8.7-9.9 20.7-15.3 12.3-5.4 27-5.4zm156.3 154.8q-24.9 0-43.5-9.3-18.3-9.6-28.5-27-9.9-17.4-9.9-40.8 0-23.1 10.2-40.5 10.2-17.7 28.5-27.3 18.3-9.9 42.3-9.9 16.5 0 31.5 6 15 5.7 26.7 17.1l-26.1 28.5q-12.6-11.7-29.7-11.7-16.2 0-26.4 10.5-10.2 10.2-10.2 27 0 16.8 9.9 27.3 10.2 10.2 26.7 10.2 18.3 0 31.2-12.9l26.7 28.2q-24.9 24.6-59.4 24.6zm197.7-136.5l-63.3 92.1h65.4v41.1h-132.6v-15.6l63.6-92.7h-57.9v-39.9h124.8zm41.4 136.2q-12 0-19.8-7.2-7.5-7.2-7.5-18.3 0-11.1 7.5-18.3 7.8-7.2 19.8-7.2 11.7 0 19.2 7.2 7.8 7.2 7.8 18.3 0 11.1-7.8 18.3-7.5 7.2-19.2 7.2zm217.4-154.5q28.2 0 44.4 16.5 16.2 16.5 16.2 45.3v89.7h-47.1v-83.7q0-13.2-6.3-20.4-6-7.5-17.1-7.5-12.3 0-19.5 8.4-7.2 8.4-7.2 22.2v81h-46.8v-83.7q0-13.2-6-20.4-6-7.5-17.1-7.5-12.3 0-19.8 8.4-7.2 8.4-7.2 22.2v81h-47.1v-148.2h40.8l2.7 16.5q7.8-9.6 18.6-14.7 11.1-5.1 23.7-5.1 14.4 0 25.8 6.3 11.4 6 18 16.8 18-23.1 51-23.1zm157.5 50.1l18.9-46.8h51c0 0-69.6 162.2-88.3 202.8-15.1 32.7-60.6 25.9-60.6 25.9l35.2-82.6-57.6-146.1h50.7l17.1 46.8 16.2 48.3z"
+        ></path>
+      </svg>
+      <!-- </a> -->
+      <p class="mt-2 text-xs text-muted-foreground">
+        &copy; {currentYear}. <a
+          href="https://creativecommons.org/licenses/by-nc/4.0/deed"
+          class="link-sweep">CC BY-NC 4.0.</a
+        >
+      </p>
+    </div>
+
+    <div class="flex flex-col items-center gap-5">
+      <ul class="flex items-center gap-2.5">
+        {
+          socials.map((item) => (
+            <li>
+              <a
+                href={item.href}
+                class="social-btn"
+                aria-label={
+                  item.label === "RSS" ? "RSS feed" : `${siteConfig.name} on ${item.label}`
+                }
+                rel={item.href.startsWith("http") ? "noreferrer" : undefined}
+              >
+                <LocalIcon name={item.icon} className="h-[0.95rem] w-[0.95rem]" />
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+
+      <nav aria-label="Footer navigation">
+        <ul class="flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
+          {
+            footerNavigation.map((item, index) => (
+              <li class="flex items-center gap-4">
+                {index > 0 && <span class="footer-dot" aria-hidden="true" />}
+                <a href={item.href} class="nav-link">
+                  {item.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+    </div>
+
+    <p class="text-xs text-muted-foreground md:text-right">
+      Built with <a
+        href="https://astro.build/"
+        rel="noreferrer"
+        class="link-quiet underline underline-offset-2">Astro</a
+      >
+    </p>
+  </div>
+</footer>
+
+<style>
+  .social-btn {
+    display: inline-grid;
+    width: 2.25rem;
+    height: 2.25rem;
+    place-items: center;
+    border: 1px solid var(--border);
+    color: var(--muted-foreground);
+    border-radius: var(--radius-full);
+    transition:
+      border-color var(--duration) var(--ease-out),
+      color var(--duration) var(--ease-out),
+      transform var(--duration) var(--ease-out);
+  }
+
+  .social-btn:hover,
+  .social-btn:focus-visible {
+    border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
+    color: var(--accent);
+    transform: translateY(-2px);
+  }
+
+  .footer-dot {
+    width: 2px;
+    height: 2px;
+    background: var(--border-strong);
+    border-radius: 50%;
+  }
+</style>

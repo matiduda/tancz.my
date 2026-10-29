@@ -1,0 +1,151 @@
+---
+import { siteConfig } from "@/config/site";
+import "@/styles/global.css";
+import { ClientRouter } from "astro:transitions";
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  type?: "website" | "article";
+  noindex?: boolean;
+  prevUrl?: string;
+  nextUrl?: string;
+  structuredData?: Record<string, unknown> | Record<string, unknown>[];
+}
+
+const {
+  title = siteConfig.title,
+  description = siteConfig.description,
+  image = siteConfig.socialImage,
+  type = "website",
+  noindex = false,
+  prevUrl,
+  nextUrl,
+  structuredData,
+} = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, siteConfig.siteUrl).toString();
+const absoluteImage = new URL(image, siteConfig.siteUrl).toString();
+const pageTitle = title === siteConfig.title ? title : `${title} | ${siteConfig.name}`;
+const defaultStructuredData = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: siteConfig.name,
+  url: siteConfig.siteUrl,
+  description: siteConfig.description,
+  publisher: {
+    "@type": "Organization",
+    name: siteConfig.authorName,
+  },
+};
+const schema = structuredData ?? defaultStructuredData;
+---
+
+<html lang={siteConfig.language} data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <ClientRouter />
+    <link
+      rel="preload"
+      href="/fonts/geist/Geist-Variable.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href={canonical} />
+    {prevUrl && <link rel="prev" href={new URL(prevUrl, siteConfig.siteUrl).toString()} />}
+    {nextUrl && <link rel="next" href={new URL(nextUrl, siteConfig.siteUrl).toString()} />}
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title={`${siteConfig.name} RSS`}
+      href={new URL("/rss.xml", siteConfig.siteUrl).toString()}
+    />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    <meta property="og:locale" content={siteConfig.locale} />
+    <meta property="og:type" content={type} />
+    <meta property="og:site_name" content={siteConfig.name} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={absoluteImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={absoluteImage} />
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(schema)} />
+    <script is:inline>
+      /*
+       * Runs before first paint so the stored reading mode is applied without a
+       * flash. Falls back to the system preference until the reader picks a side.
+       */
+      const storageKey = "monograph-theme";
+      const systemDark = window.matchMedia("(prefers-color-scheme: dark)");
+
+      const getStoredTheme = () => {
+        try {
+          const theme = localStorage.getItem(storageKey);
+          return theme === "light" || theme === "dark" ? theme : null;
+        } catch {
+          return null;
+        }
+      };
+
+      const applyTheme = (theme) => {
+        const isDark = theme === "dark";
+        document.documentElement.dataset.theme = theme;
+        document.querySelectorAll("[data-theme-toggle]").forEach((button) => {
+          button.setAttribute("aria-checked", String(isDark));
+          button.setAttribute(
+            "aria-label",
+            isDark ? "Switch to light mode" : "Switch to dark mode",
+          );
+        });
+      };
+
+      const applyPreferredTheme = () =>
+        applyTheme(getStoredTheme() ?? (systemDark.matches ? "dark" : "light"));
+
+      applyPreferredTheme();
+
+      /*
+       * This inline script runs once; ClientRouter keeps it across navigations.
+       * The swap resets <html data-theme>, so re-apply right after it (before
+       * paint), and sync the toggles once the new page is ready.
+       */
+      document.addEventListener("astro:after-swap", applyPreferredTheme);
+      document.addEventListener("astro:page-load", applyPreferredTheme);
+
+      systemDark.addEventListener("change", () => {
+        if (!getStoredTheme()) applyPreferredTheme();
+      });
+
+      // Delegated so header buttons swapped in by ClientRouter work without rebinding.
+      document.addEventListener("click", (event) => {
+        if (!event.target.closest("[data-theme-toggle]")) return;
+        const theme = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+        try {
+          localStorage.setItem(storageKey, theme);
+        } catch {}
+        applyTheme(theme);
+      });
+    </script>
+  </head>
+  <body>
+    <noscript>
+      <style>
+        .animate {
+          opacity: 1;
+          translate: var(--tw-translate-x) calc(var(--spacing) * 0);
+        }
+      </style>
+    </noscript>
+    <a class="skip-link" href="#content">Skip to content</a>
+    <slot />
+  </body>
+</html>

@@ -1,0 +1,28 @@
+---
+import naszeauto from "@/assets/websites/naszeauto.svg?raw";
+import rzs from "@/assets/websites/rowerem-z-sercem.svg?raw";
+
+const websites = {
+  naszeauto,
+  rzs,
+};
+
+type WebsiteImageName = keyof typeof websites;
+
+interface Props {
+  name: WebsiteImageName;
+  className?: string;
+}
+
+const { name, className = "h-4 w-4" } = Astro.props;
+const icon = websites[name];
+---
+
+<span
+  class:list={[
+    "inline-grid place-items-center [&>svg]:h-full [&>svg]:w-full [&>svg]:fill-current",
+    className,
+  ]}
+  aria-hidden="true"
+  set:html={icon}
+/>

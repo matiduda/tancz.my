@@ -1,0 +1,45 @@
+---
+import LocalIcon from "@/components/LocalIcon.astro";
+import TableOfContentsHeading from "./TableOfContentsHeading.astro";
+
+// https://kld.dev/building-table-of-contents/
+const { headings } = Astro.props;
+const toc = buildToc(headings);
+
+export interface Heading {
+  depth: number;
+  slug: string;
+  text: string;
+}
+
+function buildToc(headings: Heading[]) {
+  const toc: Heading[] = [];
+  const parentHeadings = new Map();
+  headings.forEach((h) => {
+    const heading = { ...h, subheadings: [] };
+    parentHeadings.set(heading.depth, heading);
+    if (heading.depth === 2) {
+      toc.push(heading);
+    } else {
+      parentHeadings.get(heading.depth - 1).subheadings.push(heading);
+    }
+  });
+  return toc;
+}
+---
+
+<div
+  class="animate group toc-un-dim fixed hidden min-[1600px]:block max-w-32 min-[1800px]:max-w-full"
+>
+  <LocalIcon
+    name="text-left"
+    className="w-5 h-5 transition-opacity duration-1000 opacity-30 toc-un-dim:opacity-100 group-hover:opacity-100"
+  />
+  <nav>
+    <ul
+      class="transition-opacity duration-1000 opacity-0 toc-un-dim:opacity-100 group-hover:opacity-100"
+    >
+      {toc.map((heading) => <TableOfContentsHeading heading={heading} />)}
+    </ul>
+  </nav>
+</div>

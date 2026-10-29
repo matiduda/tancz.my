@@ -1,0 +1,48 @@
+---
+import { Image } from "astro:assets";
+import frag from "../shaders/background.frag?raw";
+import placeholder from "@/assets/shader.png";
+---
+
+<div class="outer">
+  <shader-doodle class="animate doodle inner" shadertoy data-showManually={true} id="doodle">
+    <script is:inline type="x-shader/x-fragment" set:html={frag} />
+    <noscript>
+      <Image src={placeholder} alt="Shader showcase" class="doodle-fallback" />
+    </noscript>
+  </shader-doodle>
+</div>
+
+<script>
+  import "shader-doodle";
+
+  // shader-doodle has no load event: mark it ready once init() has added it
+  // to the render loop and a frame has been drawn.
+  const ShaderDoodle = customElements.get("shader-doodle");
+
+  const init = ShaderDoodle.prototype.init;
+  ShaderDoodle.prototype.init = async function () {
+    await init.call(this);
+    if (!this.surface) return;
+    requestAnimationFrame(() =>
+      requestAnimationFrame(() => {
+        console.log("Ready");
+        this.classList.add("show");
+        // Animate the doodle manually when it's loaded
+        this.dataset.ready = "";
+      }),
+    );
+  };
+</script>
+
+<style>
+  .doodle {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: auto 1600 / 1000;
+    max-height: 32rem; /* Same as images */
+    border-radius: var(--radius-md);
+    margin-top: calc(var(--spacing) * 8);
+  }
+</style>

@@ -1,0 +1,28 @@
+---
+import SiteFooter from "@/components/SiteFooter.astro";
+import SiteHeader from "@/components/SiteHeader.astro";
+import { siteConfig } from "@/config/site";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { visiblePosts } from "@/lib/posts";
+import { getCollection } from "astro:content";
+
+const allPosts = visiblePosts(await getCollection("posts"));
+---
+
+<BaseLayout title="AI Policy" description={`AI policy for ${siteConfig.name}.`}>
+  <SiteHeader posts={allPosts} />
+  <main id="content" class="outer">
+    <div class="canvas">
+      <header class="pagehead">
+        <p class="eyebrow">AI Policy</p>
+        <h1 class="pagehead-title">AI policy</h1>
+        <p class="pagehead-description">
+          No content present on this website was generated using LLM's or other forms of generative
+          AI. The author strictly prohibits any usage of this website and it's content for AI model
+          training.
+        </p>
+      </header>
+    </div>
+    <SiteFooter />
+  </main>
+</BaseLayout>

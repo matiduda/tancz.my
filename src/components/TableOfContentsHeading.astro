@@ -1,0 +1,22 @@
+---
+import type { Heading } from "./TableOfContents.astro";
+
+// https://kld.dev/building-table-of-contents/
+
+const { heading, className = "pl-0" } = Astro.props;
+---
+
+<li class=`mx-0 my-3 text-sm ${className}`>
+  <a href={"#" + heading.slug} class="link-sweep table-of-contents-heading">
+    {heading.text}
+  </a>
+  {
+    heading.subheadings.length > 0 && (
+      <ul class="">
+        {heading.subheadings.map((subheading: Heading) => (
+          <Astro.self heading={subheading} className="pl-4" />
+        ))}
+      </ul>
+    )
+  }
+</li>
