@@ -9,7 +9,9 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 import Callout from "@/components/mdx/Callout.astro";
 import CodeGroup from "@/components/mdx/CodeGroup.astro";
 import CodeGroupItem from "@/components/mdx/CodeGroupItem.astro";
+import PostImage from "@/components/mdx/PostImage.astro";
 import TableOfContents from "@/components/TableOfContents.astro";
+import CookieConsent from "@/components/CookieConsent.astro";
 
 import { siteConfig } from "@/config/site";
 import {
@@ -40,7 +42,7 @@ interface Props {
 
 const { post, allPosts } = Astro.props;
 const { Content, headings } = await render(post);
-const mdxComponents = { Callout, CodeGroup, CodeGroupItem };
+const mdxComponents = { Callout, CodeGroup, CodeGroupItem, img: PostImage };
 const data = post.data;
 const related = getRelated(allPosts, post);
 const { newer, older } = getAdjacent(allPosts, post);
@@ -90,6 +92,7 @@ const structuredData = {
   structuredData={structuredData}
 >
   <SiteHeader posts={allPosts} />
+  <CookieConsent />
   <main id="content" class="outer">
     {headings.length > 0 && <TableOfContents headings={headings} />}
     <article>
@@ -103,7 +106,7 @@ const structuredData = {
               sizes="(min-width: 1200px) 1200px, 100vw"
               loading="eager"
               decoding="async"
-              class="animate w-full"
+              class="animate w-full border border-border"
             />
             {data.cover.creditName && (
               <figcaption>
@@ -236,7 +239,7 @@ const structuredData = {
           </h2>
           <div class="grid gap-7">
             {related.map((item) => (
-              <PostCard post={item} variant="compact" headingLevel="h3" />
+              <PostCard post={item} variant="feed" headingLevel="h3" />
             ))}
           </div>
         </section>

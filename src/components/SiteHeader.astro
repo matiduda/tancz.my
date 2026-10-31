@@ -33,10 +33,11 @@ const isCurrentPath = (href: string) =>
         viewBox="0 0 1241 300"
         width="93"
         height="28"
+        class="translate-y-0.5"
       >
         <style>
           .s0 {
-            fill: var(--primary);
+            fill: var(--primary-alpha);
             stroke: var(--border-strong);
             stroke-miterlimit: 100;
             stroke-width: 10;
@@ -816,6 +817,7 @@ const isCurrentPath = (href: string) =>
     }
 
     to {
+      stroke-opacity: 0;
       stroke-dashoffset: 0;
       stroke-dasharray: 5893.75732421875px;
     }
@@ -823,7 +825,7 @@ const isCurrentPath = (href: string) =>
 
   @-webkit-keyframes animate-svg-fill-1 {
     0% {
-      fill: transparent;
+      fill: var(--primary-alpha);
     }
 
     to {
@@ -833,7 +835,7 @@ const isCurrentPath = (href: string) =>
 
   @keyframes animate-svg-fill-1 {
     0% {
-      fill: transparent;
+      fill: var(--primary-alpha);
     }
 
     to {

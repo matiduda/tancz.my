@@ -1,6 +1,7 @@
-import type { CollectionEntry } from "astro:content";
+import { authorDescription } from "@/config/authors";
 import { categories, categorySlug, type Category } from "@/config/categories";
 import { siteConfig } from "@/config/site";
+import type { CollectionEntry } from "astro:content";
 
 export type Post = CollectionEntry<"posts">;
 export { categories, categorySlug, type Category };
@@ -86,7 +87,7 @@ export const getAllAuthors = (posts: Post[]) =>
         const current = authors.get(slug);
         authors.set(slug, {
           name: post.data.author.name,
-          role: post.data.author.role,
+          role: authorDescription[post.data.author.name as keyof typeof authorDescription],
           posts: [...(current?.posts ?? []), post],
         });
         return authors;

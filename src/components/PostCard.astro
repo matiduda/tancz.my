@@ -25,7 +25,7 @@ const data = post.data;
 ---
 
 <article class:list={["animate", "card", `card-${variant}`]}>
-  <a href={href} class="link-title">
+  <a href={href} class="link-title group h-full flex flex-col">
     {
       variant === "lead" && (
         <p class="meta card-toprow">
@@ -39,21 +39,22 @@ const data = post.data;
 
     {
       data.cover && (
-        <Image
-          src={data.cover.src}
-          alt={data.cover.alt}
-          widths={[640, 960, 1200, 1600, 2000]}
-          sizes="(min-width: 1200px) 1200px, 100vw"
-          loading="eager"
-          decoding="async"
-          class="card-image"
-        />
+        <div class="card-image overflow-hidden border border-border">
+          <Image
+            src={data.cover.src}
+            alt={data.cover.alt}
+            widths={[640, 960, 1200, 1600, 2000]}
+            sizes="(min-width: 1200px) 1200px, 100vw"
+            loading="eager"
+            decoding="async"
+            class="card-image scale-110 object-cover transition-[scale,filter] duration-500 group-hover:scale-100 saturate-75 group-hover:saturate-100 grayscale-25 group-hover:grayscale-0"
+          />
+        </div>
       )
     }
 
     <Heading class="card-title link-title__text">{title}</Heading>
-    <p class="card-excerpt">{excerpt}</p>
-
+    <p class="card-excerpt flex-1">{excerpt}</p>
     <p class="meta card-footer">
       {
         variant === "lead" ? (
@@ -64,7 +65,7 @@ const data = post.data;
           </time>
         )
       }
-      {variant !== "compact" && <span>{readingLabel(post)}</span>}
+      <span>{readingLabel(post)}</span>
     </p>
   </a>
 </article>
@@ -111,7 +112,7 @@ const data = post.data;
   }
 
   .card-feed .card-title {
-    font-size: clamp(1.6rem, 3.6vw, 2.125rem);
+    font-size: clamp(1.6rem, 3.6vw, 1.75rem);
     line-height: 1.12;
   }
 
@@ -140,7 +141,7 @@ const data = post.data;
   .card-lead .card-image {
     max-height: 16rem;
     width: auto;
-    aspect-ratio: 16 / 9;
+    aspect-ratio: 2 / 1;
   }
 
   .card-feed .card-image {

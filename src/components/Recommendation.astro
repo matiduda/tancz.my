@@ -1,0 +1,41 @@
+---
+import WebsitesImages from "@/components/WebsitesImages.astro";
+import type { Recommendation } from "@/config/site";
+
+interface Props {
+  recommendation: Recommendation;
+}
+
+const { recommendation } = Astro.props;
+---
+
+<div class="animate">
+  <a href={recommendation.href} class="group flex gap-4 link-title">
+    <span class="sr-only">{recommendation.description}</span>
+    <div
+      class="bg-white w-12 h-12 p-2 rounded-full outline outline-muted group-hover:outline-accent transition-colors duration-(--duration-fast)"
+    >
+      <WebsitesImages
+        name={recommendation.image}
+        className=`h-full w-full ${recommendation.class}`
+      />
+    </div>
+    <div>
+      <p class="link-title__text rec-title">{recommendation.label}</p>
+      <p class="rec-excerpt">{recommendation.description}</p>
+    </div>
+  </a>
+</div>
+
+<style>
+  .rec-title {
+    font-family: var(--font-display);
+    font-weight: 600;
+  }
+
+  .rec-excerpt {
+    color: var(--muted-foreground);
+    font-size: 0.875rem;
+    line-height: 1.6;
+  }
+</style>

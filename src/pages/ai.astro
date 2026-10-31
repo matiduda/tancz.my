@@ -1,4 +1,5 @@
 ---
+import CookieConsent from "@/components/CookieConsent.astro";
 import SiteFooter from "@/components/SiteFooter.astro";
 import SiteHeader from "@/components/SiteHeader.astro";
 import { siteConfig } from "@/config/site";
@@ -11,6 +12,7 @@ const allPosts = visiblePosts(await getCollection("posts"));
 
 <BaseLayout title="AI Policy" description={`AI policy for ${siteConfig.name}.`}>
   <SiteHeader posts={allPosts} />
+  <CookieConsent />
   <main id="content" class="outer">
     <div class="canvas">
       <header class="pagehead">

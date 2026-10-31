@@ -12,18 +12,28 @@ export interface Heading {
   text: string;
 }
 
+export interface TocHeading extends Heading {
+  subheadings: TocHeading[];
+}
+
 function buildToc(headings: Heading[]) {
-  const toc: Heading[] = [];
-  const parentHeadings = new Map();
-  headings.forEach((h) => {
-    const heading = { ...h, subheadings: [] };
-    parentHeadings.set(heading.depth, heading);
-    if (heading.depth === 2) {
-      toc.push(heading);
-    } else {
-      parentHeadings.get(heading.depth - 1).subheadings.push(heading);
+  const toc: TocHeading[] = [];
+  const parentHeadings = new Map<number, TocHeading>();
+
+  for (const h of headings.filter((h) => h.depth >= 2)) {
+    const heading: TocHeading = { ...h, subheadings: [] };
+
+    // Forget deeper headings from the previous section, then find the closest shallower one.
+    for (const depth of parentHeadings.keys()) {
+      if (depth >= heading.depth) parentHeadings.delete(depth);
     }
-  });
+    const parent = [...parentHeadings.values()].at(-1);
+
+    if (parent) parent.subheadings.push(heading);
+    else toc.push(heading);
+
+    parentHeadings.set(heading.depth, heading);
+  }
   return toc;
 }
 ---

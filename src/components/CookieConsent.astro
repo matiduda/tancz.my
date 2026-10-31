@@ -1,0 +1,128 @@
+---
+
+---
+
+<div transition:persist class="consent-wrapper">
+  <div
+    class="animate consent-popup bg-background/70 border border-border bg-frosted-glass"
+    data-show-manually
+    hidden
+    id="cookie-popup"
+  >
+    <p class="consent-title">Privacy notice</p>
+    <p class="consent-description mt-2">
+      We use Google Analytics cookies to count page views, only if you agree.
+    </p>
+    <div class="flex gap-4 mt-4">
+      <button class="btn btn-solid btn-block" id="cookie-accept-button">Agree</button>
+      <button class="btn btn-outline bg-background btn-block" id="cookie-reject-button"
+        >Disagree</button
+      >
+    </div>
+  </div>
+</div>
+
+<style>
+  .consent-wrapper {
+    z-index: 9999;
+    width: 100%;
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    bottom: 0;
+    right: 0;
+    padding: var(--gutter);
+    pointer-events: none;
+  }
+
+  .consent-popup {
+    padding: 1rem;
+    border-radius: var(--radius-lg);
+    pointer-events: auto;
+  }
+
+  .consent-title {
+    font-family: var(--font-display);
+    font-weight: 600;
+  }
+
+  .consent-description {
+    color: var(--muted-foreground);
+    font-size: 0.875rem;
+    line-height: 1.6;
+  }
+
+  @media (width >= 48rem) {
+    .consent-wrapper {
+      justify-content: right;
+    }
+
+    .consent-popup {
+      max-width: 18rem;
+    }
+  }
+
+  .hide {
+  }
+</style>
+
+<script is:inline>
+  const GA_ID = "G-HP9X4E44ZD";
+  const CONSENT_KEY = "analytics-consent";
+
+  window.dataLayer = window.dataLayer || [];
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+
+  // Load GA only after the visitor has accepted analytics.
+  const loadAnalytics = () => {
+    if (window.analyticsLoaded) return;
+    window.analyticsLoaded = true;
+    const script = document.createElement("script");
+    script.async = true;
+    script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_ID}`;
+    document.head.append(script);
+    gtag("js", new Date());
+    gtag("config", GA_ID);
+  };
+
+  const popup = document.getElementById("cookie-popup");
+
+  const showPopup = () => {
+    popup.hidden = false;
+    // Wait a frame so the .animate transition runs instead of jumping.
+    requestAnimationFrame(() => requestAnimationFrame(() => popup.classList.add("show")));
+  };
+
+  const hidePopup = () => {
+    popup.classList.remove("show"); // fades out via .animate
+    popup.addEventListener("transitionend", () => (popup.hidden = true), { once: true });
+  };
+
+  try {
+    const consent = localStorage.getItem(CONSENT_KEY);
+    if (consent === "granted") {
+      loadAnalytics();
+    } else if (!consent) {
+      // Show the modal
+      showPopup();
+    }
+  } catch {
+    console.error(`Could not load item ${CONSENT_KEY} from local storage.`);
+  }
+
+  const acceptButton = document.getElementById("cookie-accept-button");
+  const rejectButton = document.getElementById("cookie-reject-button");
+
+  acceptButton.addEventListener("click", () => {
+    localStorage.setItem(CONSENT_KEY, "granted");
+    loadAnalytics();
+    hidePopup();
+  });
+
+  rejectButton.addEventListener("click", () => {
+    localStorage.setItem(CONSENT_KEY, "rejected");
+    hidePopup();
+  });
+</script>

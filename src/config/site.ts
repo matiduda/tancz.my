@@ -14,6 +14,8 @@ export const siteConfig = {
   socialImage: "/og-image.png",
   /** Shown in the home sidebar "About" card. */
   about: `I'm a frontend developer with 3+ years of professional experience. This website is created to be a place to dump all the stuff I'm passionate about. I'm always eager to collaborate on an interesting project, so if you have one hit me up!`,
+  // Shown in the 'recommended' card on homepage
+  recommended: `Things worth checking out`,
   /**
    * Both forms below ship enabled with an empty `action`, which makes them fully
    * interactive demos that submit nowhere: a small script confirms the submit
@@ -23,7 +25,7 @@ export const siteConfig = {
    * TODO: Add newsletter based on RSS feed & follow.it
    */
   newsletter: {
-    enabled: true,
+    enabled: false,
     action: "",
     method: "post",
     emailFieldName: "email",
@@ -59,6 +61,20 @@ export const footerNavigation = [
 
 /** Custom "reccomendations" section on the main page. */
 export const recommendations = [
-  { label: "NaszEauto", description: "Electric vehicle subsidy program", href: "https://naszeauto.gov.pl/", image: "rzs" },
-  { label: "Rowerem z Sercem", description: "Non-profit livestream event", href: "https://roweremzsercem.pl/", image: "naszeauto" },
-];
+  {
+    label: "Rowerem z Sercem",
+    description: "Non-profit livestream event",
+    href: "https://roweremzsercem.pl/",
+    image: "rzs",
+    class: ""
+  },
+  {
+    label: "NaszEauto",
+    description: "Electric vehicle subsidy program",
+    href: "https://naszeauto.gov.pl/",
+    image: "naszeauto",
+    class: "scale-150"
+  },
+] as const;
+
+export type Recommendation = (typeof recommendations)[number];

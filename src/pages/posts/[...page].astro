@@ -1,4 +1,5 @@
 ---
+import CookieConsent from "@/components/CookieConsent.astro";
 import PostCard from "@/components/PostCard.astro";
 import SiteFooter from "@/components/SiteFooter.astro";
 import SiteHeader from "@/components/SiteHeader.astro";
@@ -29,6 +30,7 @@ const nextUrl = withTrailingSlash(page.url.next);
 
 <BaseLayout title={title} description={description} prevUrl={prevUrl} nextUrl={nextUrl}>
   <SiteHeader posts={allPosts} />
+  <CookieConsent />
   <main id="content" class="outer">
     <div class="canvas">
       <header class="pagehead">

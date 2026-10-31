@@ -1,15 +1,17 @@
 ---
-import { getCollection } from "astro:content";
+import CookieConsent from "@/components/CookieConsent.astro";
 import SiteFooter from "@/components/SiteFooter.astro";
 import SiteHeader from "@/components/SiteHeader.astro";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { visiblePosts } from "@/lib/posts";
+import { getCollection } from "astro:content";
 
 const allPosts = visiblePosts(await getCollection("posts"));
 ---
 
 <BaseLayout title="Page not found" description="The page you requested could not be found." noindex>
   <SiteHeader posts={allPosts} />
+  <CookieConsent />
   <main id="content" class="outer grid min-h-[55vh] place-items-center py-16 text-center">
     <div>
       <p class="eyebrow">Error 404</p>

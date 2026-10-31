@@ -1,9 +1,12 @@
 ---
+import Avatar from "@/assets/avatar.jpg";
+import CookieConsent from "@/components/CookieConsent.astro";
 import SiteFooter from "@/components/SiteFooter.astro";
 import SiteHeader from "@/components/SiteHeader.astro";
 import { siteConfig } from "@/config/site";
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import { authorSlug, getAllAuthors, visiblePosts } from "@/lib/posts";
+import { getAllAuthors, visiblePosts } from "@/lib/posts";
+import { Image } from "astro:assets";
 import { getCollection } from "astro:content";
 
 const allPosts = visiblePosts(await getCollection("posts"));
@@ -15,41 +18,21 @@ const authors = getAllAuthors(allPosts);
   description={`About ${siteConfig.name} — what it publishes and who writes it.`}
 >
   <SiteHeader posts={allPosts} />
+  <CookieConsent />
   <main id="content" class="outer">
     <div class="canvas">
       <header class="pagehead">
-        <p class="eyebrow">About</p>
-        <h1 class="pagehead-title">{siteConfig.authorName}</h1>
-        <p class="pagehead-description">{siteConfig.about}</p>
+        <Image
+          src={Avatar}
+          alt="Picture of myself"
+          class="animate rounded-(--radius-md) mb-6 size-48 md:size-64 border border-border"
+        />
+        <p class="animate eyebrow">About</p>
+        <h1 class="animate pagehead-title">{siteConfig.authorName}</h1>
+        <p class="animate pagehead-description">{siteConfig.about}</p>
       </header>
 
-      <div class="prose">
-        <h2>What gets published here</h2>
-        <p>
-          Long-form notes on building software: the decision behind a change, what it cost, and what
-          would be done differently next time. Posts are written to be read once, carefully, rather
-          than skimmed.
-        </p>
-
-        <h2>How it is written</h2>
-        <p>
-          Every post aims to be reproducible and honest about trade-offs. If something did not work,
-          that goes in too. Corrections are made in place, with the update date shown at the top of
-          the post.
-        </p>
-
-        <h2>Who writes it</h2>
-        <ul>
-          {
-            authors.map((author) => (
-              <li>
-                <a href={`/author/${authorSlug(author.name)}/`}>{author.name}</a> — {author.role} (
-                {author.posts.length} {author.posts.length === 1 ? "post" : "posts"})
-              </li>
-            ))
-          }
-        </ul>
-
+      <div class="animate prose">
         <h2>Get in touch</h2>
         <p>
           Questions, corrections, and requests are welcome through the <a href="/contact/"

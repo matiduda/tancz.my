@@ -51,6 +51,7 @@
   --nav-table-of-contents: #8c8c96;
   --nav-table-of-contents-hover: #58585e;
   --primary: #17171a;
+  --primary-alpha: #17171a09;
   --primary-foreground: #ffffff;
   --accent: #1a4fa0;
   --accent-strong: #123a79;
@@ -109,6 +110,7 @@
   --nav-table-of-contents: #606063;
   --nav-table-of-contents-hover: #b4b4bb;
   --primary: #f2f2f3;
+  --primary-alpha: #f2f2f309;
   --primary-foreground: #101012;
   --accent: #8ab4f8;
   --accent-strong: #b3cffb;
@@ -207,12 +209,14 @@
    */
   .feed {
     display: grid;
-    gap: 4rem;
+    grid-template-columns: 1fr;
+    gap: 4rem 4rem;
   }
 
   @media (min-width: 768px) {
     .feed {
-      gap: 5rem;
+      gap: 3rem 2rem;
+      grid-template-columns: 1fr 1fr;
     }
   }
 
@@ -858,6 +862,11 @@
     letter-spacing: 0.04em;
     text-transform: uppercase;
     color: var(--muted-foreground);
+  }
+
+  .prose img {
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
   }
 
   /* ---------------------------------------------------------------- code --- */

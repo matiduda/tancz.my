@@ -5,10 +5,15 @@ import placeholder from "@/assets/shader.png";
 ---
 
 <div class="outer">
-  <shader-doodle class="animate doodle inner" shadertoy data-showManually={true} id="doodle">
+  <shader-doodle
+    class="animate doodle inner border border-border"
+    shadertoy
+    data-show-manually
+    id="doodle"
+  >
     <script is:inline type="x-shader/x-fragment" set:html={frag} />
     <noscript>
-      <Image src={placeholder} alt="Shader showcase" class="doodle-fallback" />
+      <Image src={placeholder} alt="Shader showcase" class="doodle-fallback border border-border" />
     </noscript>
   </shader-doodle>
 </div>
@@ -26,9 +31,8 @@ import placeholder from "@/assets/shader.png";
     if (!this.surface) return;
     requestAnimationFrame(() =>
       requestAnimationFrame(() => {
-        console.log("Ready");
-        this.classList.add("show");
         // Animate the doodle manually when it's loaded
+        this.classList.add("show");
         this.dataset.ready = "";
       }),
     );
