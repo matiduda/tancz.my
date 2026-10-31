@@ -1,0 +1,28 @@
+---
+import CookieConsent from "@/components/CookieConsent.astro";
+import SiteFooter from "@/components/SiteFooter.astro";
+import SiteHeader from "@/components/SiteHeader.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { visiblePosts } from "@/lib/posts";
+import { getCollection } from "astro:content";
+
+const allPosts = visiblePosts(await getCollection("posts"));
+---
+
+<BaseLayout title="Success" description={`Contact form sent successfully`}>
+  <SiteHeader posts={allPosts} />
+  <CookieConsent />
+  <main id="content" class="outer">
+    <div class="canvas">
+      <header class="pagehead">
+        <p class="eyebrow">Contact form sent</p>
+        <h1 class="pagehead-title">Success</h1>
+        <p class="pagehead-description">
+          Thank you for sending the contact form! I will try to read it and respond as soon as
+          possible.
+        </p>
+      </header>
+    </div>
+    <SiteFooter />
+  </main>
+</BaseLayout>

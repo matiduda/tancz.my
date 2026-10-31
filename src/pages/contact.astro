@@ -33,8 +33,12 @@ const isEnabled = contact.enabled;
       </header>
 
       <form
+        name="contact"
         class="grid gap-5"
         data-contact-form={isEnabled ? "" : undefined}
+        data-netlify="true"
+        method={contact.method}
+        action="/success"
       >
         <div class="animate grid gap-2">
           <label class="text-sm font-semibold" for="contact-name">Name</label>

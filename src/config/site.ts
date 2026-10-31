@@ -35,6 +35,7 @@ export const siteConfig = {
   // Contact form is handled by Netlify
   contact: {
     enabled: true,
+    method: "POST",
   },
   socials: [
     { label: "GitHub", href: "https://github.com/matiduda/" },
