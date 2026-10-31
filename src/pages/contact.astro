@@ -9,11 +9,7 @@ import CookieConsent from "@/components/CookieConsent.astro";
 
 const allPosts = visiblePosts(await getCollection("posts"));
 const contact = siteConfig.contact;
-const action = contact.action.trim();
 const isEnabled = contact.enabled;
-/* No endpoint configured: keep the form usable and confirm the submit locally
-   rather than posting the page to nowhere. */
-const isDemo = isEnabled && action.length === 0;
 ---
 
 <BaseLayout title="Contact" description={`Get in touch with ${siteConfig.name}.`}>
@@ -38,9 +34,7 @@ const isDemo = isEnabled && action.length === 0;
 
       <form
         class="grid gap-5"
-        action={action || undefined}
-        method={contact.method}
-        data-contact-form={isDemo ? "" : undefined}
+        data-contact-form={isEnabled ? "" : undefined}
       >
         <div class="animate grid gap-2">
           <label class="text-sm font-semibold" for="contact-name">Name</label>
@@ -77,7 +71,7 @@ const isDemo = isEnabled && action.length === 0;
   <SiteFooter />
 
   {
-    isDemo && (
+    !isEnabled && (
       <script is:inline>
         document.querySelectorAll("[data-contact-form]").forEach((form) => {
           form.addEventListener("submit", (event) => {

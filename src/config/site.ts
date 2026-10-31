@@ -32,10 +32,9 @@ export const siteConfig = {
     title: "Get new posts by email",
     description: "One email when something new goes up. No spam, unsubscribe anytime.",
   },
+  // Contact form is handled by Netlify
   contact: {
     enabled: true,
-    action: "",
-    method: "post",
   },
   socials: [
     { label: "GitHub", href: "https://github.com/matiduda/" },
