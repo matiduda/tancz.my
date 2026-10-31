@@ -418,8 +418,11 @@ const structuredData = {
   </style>
 </BaseLayout>
 
-<script is:inline>
-  {
+<script>
+  // Runs once; the listener loads giscus on every post, including after page transitions.
+  document.addEventListener("astro:page-load", () => {
+    if (!document.querySelector(".giscus")) return;
+
     const giscus = document.createElement("script");
     giscus.src = "https://giscus.app/client.js";
     giscus.async = true;
@@ -439,5 +442,5 @@ const structuredData = {
       loading: "lazy",
     });
     document.body.append(giscus);
-  }
+  });
 </script>
