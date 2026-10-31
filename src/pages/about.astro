@@ -5,12 +5,11 @@ import SiteFooter from "@/components/SiteFooter.astro";
 import SiteHeader from "@/components/SiteHeader.astro";
 import { siteConfig } from "@/config/site";
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import { getAllAuthors, visiblePosts } from "@/lib/posts";
+import { visiblePosts } from "@/lib/posts";
 import { Image } from "astro:assets";
 import { getCollection } from "astro:content";
 
 const allPosts = visiblePosts(await getCollection("posts"));
-const authors = getAllAuthors(allPosts);
 ---
 
 <BaseLayout

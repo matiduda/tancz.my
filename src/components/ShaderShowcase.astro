@@ -25,18 +25,23 @@ import placeholder from "@/assets/shader.png";
   // to the render loop and a frame has been drawn.
   const ShaderDoodle = customElements.get("shader-doodle");
 
-  const init = ShaderDoodle.prototype.init;
-  ShaderDoodle.prototype.init = async function () {
-    await init.call(this);
-    if (!this.surface) return;
-    requestAnimationFrame(() =>
-      requestAnimationFrame(() => {
-        // Animate the doodle manually when it's loaded
-        this.classList.add("show");
-        this.dataset.ready = "";
-      }),
-    );
-  };
+  const init = ShaderDoodle?.prototype?.init;
+
+  if (init) {
+    ShaderDoodle.prototype.init = async function () {
+      await init.call(this);
+      if (!this.surface) return;
+      requestAnimationFrame(() =>
+        requestAnimationFrame(() => {
+          // Animate the doodle manually when it's loaded
+          this.classList.add("show");
+          this.dataset.ready = "";
+        }),
+      );
+    };
+  } else {
+    console.error("Could not get shader doodle element");
+  }
 </script>
 
 <style>
