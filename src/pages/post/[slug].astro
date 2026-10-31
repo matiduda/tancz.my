@@ -197,9 +197,12 @@ const structuredData = {
         <Content components={mdxComponents} />
       </div>
 
+      <!-- Giscus comments -->
+      <div class="giscus canvas mt-16 border-t border-border pt-8"></div>
+
       {
         (newer || older) && (
-          <footer class="animate canvas mt-16 border-t border-border pt-8">
+          <footer class="animate canvas mt-8 border-t border-border pt-8">
             <nav class="grid gap-8 sm:grid-cols-2" aria-label="Post navigation">
               <div>
                 {older && (
@@ -414,3 +417,27 @@ const structuredData = {
     }
   </style>
 </BaseLayout>
+
+<script is:inline>
+  {
+    const giscus = document.createElement("script");
+    giscus.src = "https://giscus.app/client.js";
+    giscus.async = true;
+    giscus.crossOrigin = "anonymous";
+    Object.assign(giscus.dataset, {
+      repo: "matiduda/tancz.my",
+      repoId: "R_kgDOVa2Sbg",
+      category: "Announcements",
+      categoryId: "DIC_kwDOVa2Sbs4DKF0w",
+      mapping: "pathname",
+      strict: "0",
+      reactionsEnabled: "1",
+      emitMetadata: "0",
+      inputPosition: "bottom",
+      theme: document.documentElement.dataset.theme,
+      lang: "en",
+      loading: "lazy",
+    });
+    document.body.append(giscus);
+  }
+</script>

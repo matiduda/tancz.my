@@ -106,6 +106,10 @@ const schema = structuredData ?? defaultStructuredData;
             isDark ? "Switch to light mode" : "Switch to dark mode",
           );
         });
+        // Update giscus theme
+        document
+          .querySelector("iframe.giscus-frame")
+          ?.contentWindow.postMessage({ giscus: { setConfig: { theme } } }, "https://giscus.app");
       };
 
       const applyPreferredTheme = () =>

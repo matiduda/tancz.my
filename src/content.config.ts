@@ -1,7 +1,7 @@
-import { defineCollection } from "astro:content";
+import { categories } from "@/config/categories";
 import { glob } from "astro/loaders";
 import { z } from "astro/zod";
-import { categories } from "@/config/categories";
+import { defineCollection } from "astro:content";
 
 const posts = defineCollection({
   loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/posts" }),
@@ -15,7 +15,6 @@ const posts = defineCollection({
       updatedDate: z.coerce.date().optional(),
       author: z.object({
         name: z.string(),
-        role: z.string(),
       }),
       /**
        * Optional feature image. Monograph's post feeds are deliberately
